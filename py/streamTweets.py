@@ -109,10 +109,10 @@ class TwtStreamListener(twt.StreamListener):
                 })
         # retweet
         if hasattr(tweet, "retweeted_status"):
-            data.update({"retweeted_id": tweet.retweeted_status.id})
+            data.update({"retweeted_id": tweet.retweeted_status.id_str})
             try:
                 data.update({
-                    "retweet_text":
+                    "retweeted_text":
                     tweet.retweeted_status.extended_tweet['full_text']
                 })
             except AttributeError:
@@ -165,7 +165,8 @@ def main(argv):
     api = twt.API(auth)
     # open stream listener
     streamListener = TwtStreamListener(save_to_file, limit)
-    stream = twt.Stream(auth=api.auth, listener=streamListener)
+    stream = twt.Stream(
+        auth=api.auth, listener=streamListener, tweet_mode='extended')
     # start streaming
     stream.filter(track=keywords)
     # finished
