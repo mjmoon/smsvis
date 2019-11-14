@@ -18,7 +18,6 @@ class TwtStreamListener(twt.StreamListener):
         self._file = file + self._start_time.strftime('-%Y%m%d-%H%M%S.json')
         self._counter = 1
         self._limit = limit
-        self._twt_list = []
         print(
             'Started at ' +
             self._start_time.strftime(self._dateFormat))
@@ -42,6 +41,7 @@ class TwtStreamListener(twt.StreamListener):
                     json.dumps(self._map_status_fields(status)) + ']}')
             print('Status ' + str(self._counter) +
                   ':    ' + status.text)
+            print('Output saved at ' + self._file)
             return False
 
     def on_error(self, status_code):
@@ -60,6 +60,7 @@ class TwtStreamListener(twt.StreamListener):
         print(msg)
         with open(self._file, "a+") as f:
             f.write('] + "Error":"' + msg + '"\n}')
+        print('Output saved at ' + self._file)
         return False
 
     def _map_status_fields(self, tweet):
@@ -130,22 +131,32 @@ class TwtStreamListener(twt.StreamListener):
 def main(argv):
     """Run from commandline."""
     try:
-        opts, args = getopt.getopt(argv, 'n', ['number'])
+        opts, args = getopt.getopt(argv, 'n:k:', ['number=', 'keywords='])
     except getopt.GetoptError as err:
         print(err)
-        print('streamTweets.py -n <number-of-tweets>')
+        print('streamTweets.py -n <number-of-tweets> -k <keywords>')
         sys.exit(2)
+    # default parameters
     limit = 10
+    keywords = ['climate change']
     for opt, arg in opts:
-        if opt == '-n':
+        if opt in ('-n', '--number'):
             try:
                 limit = int(arg)
-            except TypeError as err:
+            except ValueError as err:
                 print(err)
                 print('Number of tweets must be a integer.')
-                sys.exit(2)
+                sys.exit(1)
+        elif opt in ('-k', '--keywords'):
+            try:
+                keywords = arg.split(',')
+            except ValueError as err:
+                print(err)
+                sys.exit(1)
         else:
             assert False, "Unhandled option."
+    save_to_file = 'data/streamOut/' + \
+        '-'.join(keywords).replace(' ', '_')
     # authorize Twitter API
     with open('ACCESS.yml', 'r') as file:
         acs = yml.load(file, yml.Loader)
@@ -153,11 +164,10 @@ def main(argv):
     auth.set_access_token(acs['access_token'], acs['access_seret'])
     api = twt.API(auth)
     # open stream listener
-    streamListener = TwtStreamListener(
-        'data/streamClimateChange/climate_change', limit)
+    streamListener = TwtStreamListener(save_to_file, limit)
     stream = twt.Stream(auth=api.auth, listener=streamListener)
     # start streaming
-    stream.filter(track=['climate change'])
+    stream.filter(track=keywords)
     # finished
     print('Completed at ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
