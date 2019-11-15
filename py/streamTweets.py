@@ -2,9 +2,10 @@
 import sys
 import getopt
 from datetime import datetime
-import tweepy as twt
 import json
 import yaml as yml
+import re
+import tweepy as twt
 
 
 class TwtStreamListener(twt.StreamListener):
@@ -29,12 +30,13 @@ class TwtStreamListener(twt.StreamListener):
     def on_status(self, status):
         """Print status each time."""
         if self._counter < self._limit:
-            with open(self._file, "a+") as f:
-                f.write(
-                    json.dumps(self._map_status_fields(status)) + ',\n')
-            print('Status ' + str(self._counter) +
-                  ':    ' + status.text)
-            self._counter += 1
+            if re.match(r'^en(-gb)?$', status.lang):  # filter out non-english tweets
+                with open(self._file, "a+") as f:
+                    f.write(
+                        json.dumps(self._map_status_fields(status)) + ',\n')
+                print('Status ' + str(self._counter) +
+                      ':    ' + status.text)
+                self._counter += 1
         else:
             with open(self._file, "a+") as f:
                 f.write(
