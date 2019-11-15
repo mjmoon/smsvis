@@ -30,7 +30,7 @@ class TwtStreamListener(twt.StreamListener):
     def on_status(self, status):
         """Print status each time."""
         if self._counter < self._limit:
-            if re.match(r'^en(-gb)?$', status.lang):  # filter out non-english tweets
+            if re.match(r'^en(-gb)?$', status.lang):  # english tweets only
                 with open(self._file, "a+") as f:
                     f.write(
                         json.dumps(self._map_status_fields(status)) + ',\n')
@@ -172,7 +172,8 @@ def main(argv):
     # start streaming
     stream.filter(track=keywords)
     # finished
-    print('Completed at ' + datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    print(
+        datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ': Process completed.')
 
 
 if __name__ == '__main__':
