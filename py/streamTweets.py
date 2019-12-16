@@ -69,8 +69,7 @@ class TwtStreamListener(twt.StreamListener):
         """Extract fields from status to save to json."""
         data = {
             # status
-            "date": tweet.created_at.astimezone(
-                tz=None).strftime('%Y-%m-%d %H:%M:%S'),
+            "date": tweet.created_at.strftime('%Y-%m-%d %H:%M:%S'),
             "id": tweet.id_str,
             "text": tweet.text,
             "truncated": tweet.truncated,

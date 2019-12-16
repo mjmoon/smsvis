@@ -1,0 +1,343 @@
+body {
+    background: white;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 15px 0 0 0;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* containers */
+.plot {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    width: 85%;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+.chart-container {
+    width: 100%;
+    padding: 0 0 65% 0;
+    margin: 0;
+    vertical-align: top;
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+    float: left;
+}
+
+.timeline-container {
+    width: 100%;
+    padding: 0 0 40px 0;
+    margin: 0;
+    vertical-align: top;
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+    /*    border: dotted 0.5px blue;*/
+}
+
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* dots */
+.main .dots .dot {
+    stroke-width: 1px;
+}
+
+/* aggs */
+.main .aggs .agg {
+    stroke-width: 1px;
+}
+
+/* links */
+#arrow {
+    fill: dimgray;
+    stroke: dimgray;
+}
+
+.main .links .link {
+    stroke-width: 1px;
+    stroke: dimgray;
+    fill: none;
+}
+
+/* trends */
+.main .trends .trend {
+    stroke-width: 1px;
+    opacity: 0.05;
+}
+
+/* annotate */
+.main .description {
+    font-size: 8px;
+}
+
+/* axes */
+.x-axis .tick text {
+    text-anchor: start;
+}
+
+line.x-axis {
+    stroke: grey;
+}
+
+/* grids */
+.main .grids line.grid {
+    stroke: darkgray;
+    stroke-width: 1px;
+    stroke-dasharray: 1;
+}
+
+.main .grids rect.bg {
+    opacity: 1;
+}
+
+.main .grids text.label {
+    stroke: none;
+    fill: darkgray;
+    font-size: 8px;
+    dominant-baseline: middle;
+    text-anchor: middle;
+}
+
+.main .grids .domain {
+    stroke: none;
+}
+
+.main .grids .tick line {
+    fill: none;
+    stroke: darkgray;
+    stroke-dasharray: 1;
+}
+
+.main .grids .tick text {
+    stroke: none;
+    fill: darkgray;
+    font-size: 8px;
+    dominant-baseline: middle;
+    text-anchor: start;
+    transform: rotate(90deg);
+}
+
+.main .grids .tick .bg {
+    transform: rotate(90deg);
+}
+
+.main .grids text {
+    fill: darkgray;
+    stroke: none;
+}
+
+/* bg */
+.bg {
+    fill: white;
+    opacity: 0;
+}
+
+/* timeline */
+.timeline .tick line {
+    fill: none;
+    stroke: dimgray;
+    stroke-dasharray: 1;
+}
+
+.timeline .tick text {
+    fill: dimgray;
+}
+
+.timeline.trend {
+    opacity: 0.5;
+}
+
+.timeline .domain {
+    stroke: none;
+}
+
+.selection {
+    opacity: 0.5;
+}
+
+.handle {
+    fill: dimgray;
+    width: 2px;
+}
+
+/* controls */
+#controls {
+    height: 100%;
+    width: 15%;
+    min-width: 150px;
+    padding: 0;
+    font-family: monospace;
+    font-size: 14px;
+    float: left;
+    overflow: auto;
+}
+
+#controls .control {
+    float: left;
+    border-radius: 5px;
+    background-color: #E1E8ED;
+    padding: 4px;
+    margin: 5px 5% 0 5%;
+    height: 100%;
+    width: 90%;
+}
+
+#controls .control .header {
+    line-height: 1.7em;
+    font-weight: 600;
+    padding-left: 3px;
+}
+
+#controls .title {
+    padding: 4px;
+    margin: 5px 5% 0 5%;
+    width: 90%;
+    font-size: 1.5em;
+    line-height: 1em;
+    font-weight: 600;
+    padding-left: 3px;
+    text-transform: uppercase;
+    border-bottom: solid 1px dimgray;
+}
+
+#controls .control input,
+#controls .control select {
+    background: white;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 2px 0;
+}
+
+#controls .control input[type=number] {
+    width: 3em;
+}
+
+#controls .control input[type=checkbox] {
+    margin-right: 2px;
+}
+
+#controls .control #keyword,
+#controls .control #reset {
+    width: 100%;
+}
+
+#controls .control input:disabled {
+    background-color: #f3f3f3;
+}
+
+#controls .control .link {
+    border-top: 1px solid dimgray;
+    display: inline-block;
+    font-size: 0.5em;
+    line-height: 0.5em;
+    padding-top: 1px;
+    width: 6em;
+}
+
+#controls .control .link.retweeted {
+    border-top-style: dashed;
+}
+
+#controls .control .link.quoted {
+    border-top-style: dotted;
+}
+
+#controls .control .legend.colour {
+    width: 100%;
+    overflow-x: visible;
+}
+
+#controls .control #linLegend {
+    text-align: center;
+}
+
+#controls .reference {
+    font-size: 10px;
+    padding: 4px;
+    margin: 0 5%;
+    line-height: 1;
+}
+
+#tweet {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 400px;
+    border-radius: 25px;
+    background-color: #E1E8ED;
+    padding: 14px;
+    margin: 5px 5% 0 5%;
+    opacity: 70%;
+}
+
+#tweet .link {
+    text-decoration: none;
+}
+
+#tweet .logo {
+    float: right;
+}
+
+#tweet .user {
+    color: black;
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#tweet .context {
+    color: black;
+    font-family: monospace;
+    font-size: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+#tweet .text {
+    color: black;
+    font-family: serif;
+    font-size: 14px;
+}
+
+/* legends */
+.legend {
+    stroke-width: 1px;
+}
+
+.legend .label {
+    stroke: none;
+    fill: dimgray;
+    font-size: 10px;
+    dominant-baseline: middle;
+}
+
+.legend .symbol {
+    stroke-width: 1px;
+    stroke: dimgray;
+    fill: none;
+}
+
+#tooltip {
+    position: absolute;
+    background-color: white;
+    color: dimgray;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    padding: 3px;
+    font-family: monospace;
+    font-size: 10px;
+}

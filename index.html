@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="favicon.ico?">
+    <title>Visualising Twitter feeds for public opinion analysis prototypes.</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    <section id="controls">
+        <div class="title">
+            Visualising Public Setiment Trends and Propagation in Social Media
+        </div>
+        <div class="control">
+            <div class="header">Keyword(s)</div>
+            <input type="text" id="keyword" value="climate change" disabled />
+        </div>
+        <div class="control">
+            <div class="header">Count</div>
+            <input type="number" id="scaleBy" min="1" step="1" max="10000000" value="1"> Tweet(s) per dot<br />
+            <select id="timeScale">
+                <option value=1>every</option>
+                <option value=0.5>every half</option>
+                <option value=0.25>every quarter</option>
+            </select>
+            <select id="timeInt">
+                <option value=1>minute</option>
+                <option value=2>hour</option>
+                <option value=3>day</option>
+            </select>
+        </div>
+        <div class="control">
+            <div class="header">Colour and Sort</div>
+            Linear:
+            <select id="linBy">
+                <option value=0>None</option>
+                <option value=1>Referral counts</option>
+                <option value=2>Polarity</option>
+            </select><br />
+            <div id="linLegend" class="legend colour"></div>
+            Categorical:
+            <select id="grpBy">
+                <option value=0>None</option>
+                <option value=1>Topics</option>
+                <option value=2>Type</option>
+            </select>
+            <div id="catLegend" class="legend colour"></div>
+        </div>
+        <div class="control">
+            <div class="header">Type</div>
+            <input type="checkbox" id="retweeted" value="retweeted" checked><span class="legend link retweeted">&nbsp;</span>
+            Retweets <br />
+            <input type="checkbox" id="quoted" value="quoted" checked><span class="legend link quoted">&nbsp;</span>
+            Quotes <br />
+            <input type="checkbox" id="reply" value="reply" checked><span class="legend link reply">&nbsp;</span>
+            Replies
+        </div>
+        <div class="control">
+            <div class="header">
+                Others
+            </div>
+            <input type="checkbox" id="isAgged">Group<br />
+            <input type="checkbox" id="allLinks">Show all links<br />
+            <input type="checkbox" id="animate" checked>Animate
+        </div>
+        <div class="control">
+            <input type="button" class="control" id="reset" value="Reset" onclick="toggleReset()">
+        </div>
+        <div class="reference">
+            <p>2,500 Tweets based on "Climate Change" keyword retrieved on Nov 29, 2019 via Twitter API.</p>
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Michael J. Moon</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+        </div>
+    </section>
+    <section id="dottednetworkvis" class="plot">
+    </section>
+    <div id="tooltip"></div>
+    <div id="tweet">
+        <a class="link" target="_blank">
+            <img src="img/Twitter_Logo_Blue.svg" width="25px" class="logo" />
+            <div class="user"></div>
+            <div class="context"></div>
+            <div class="text"></div>
+        </a>
+    </div>
+    <!--    <script src="https://d3js.org/d3.v5.min.js"></script>-->
+    <script src="js/d3/d3.min.js"></script>
+    <!--    visulisation code starts here   -->
+    <script src="js/variables.js"></script>
+    <script src="js/sort-and-aggregate.js"></script>
+    <script src="js/scale.js"></script>
+    <script src="js/colour.js"></script>
+    <script src="js/filter.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/legend.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/draw.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
